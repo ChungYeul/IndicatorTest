@@ -9,15 +9,32 @@
 #import "ViewController.h"
 
 @interface ViewController ()
-
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicator1;
+@property (strong, nonatomic) UIActivityIndicatorView *indicator2;
 @end
 
 @implementation ViewController
+- (IBAction)startIndicator:(id)sender {
+    [self.indicator1 startAnimating];
+    
+    // 0.3초 뒤 시작
+    [self.indicator2 performSelector:@selector(startAnimating) withObject:nil afterDelay:0.3f];
+}
+- (IBAction)stopIndicator:(id)sender {
+    [self.indicator1 stopAnimating];
+    
+    // 0.7초 뒤 멈춤
+    [self.indicator2 performSelector:@selector(stopAnimating) withObject:nil afterDelay:0.7f];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    // 코드로 작성
+    self.indicator2 = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.indicator2.hidesWhenStopped = YES;
+    self.indicator2.center = CGPointMake(160, 350);
+    [self.view addSubview:self.indicator2];
 }
 
 - (void)didReceiveMemoryWarning
